@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+
+# Game data and ripped files never go into this repository
+sr2006_music/
+DATA.FAI
+DATA.FAB
+*.IRX
+*.irx
+*.psf2lib
+*.minipsf2
+*.mid
+*.wav
