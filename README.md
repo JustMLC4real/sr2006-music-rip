@@ -108,6 +108,8 @@ The length tag of each looping track ends on the driver tick that starts the thi
 - **Sequences** are MIDI-like with running status. The last data byte of an event has bit 7 set when no delta time follows; otherwise a MIDI variable-length delta in milliseconds follows. Note-off carries only the key, pitch bend a single 7-bit value, and `FF 2F 00` ends the track.
 - **Samples** are PS-ADPCM, the SPU2's own format.
 
-## Legal
+## License and legal
 
-This tool only reads files you already have. Everything it writes contains Sega's music, samples and sound driver, and Sony's `LIBSD.IRX`. Keep it for your own use; do not redistribute it.
+The code in this repository is released under the [MIT License](LICENSE).
+
+This tool only reads files you already have. Everything it writes contains Sega's music, samples and sound driver, and Sony's `LIBSD.IRX`. Keep it for your own use; do not redistribute it. Sega Rally is a trademark of Sega; this project is not affiliated with Sega.
