@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from sr2006rip import __version__  # noqa: E402
 from sr2006rip.archive import GameError  # noqa: E402
 from sr2006rip.bank import write_midi, write_sample_wav  # noqa: E402
-from sr2006rip.psf2 import TITLES, build_set, load_bank  # noqa: E402
+from sr2006rip.psf2 import ORDER, TITLES, build_set, load_bank, track_number  # noqa: E402
 
 
 def rip(game_dir, outdir, psf2=True, midi=True, samples=True, log=print, cancel=None):
@@ -40,10 +40,9 @@ def rip(game_dir, outdir, psf2=True, midi=True, samples=True, log=print, cancel=
         log('MIDI files ...')
         d = os.path.join(outdir, 'midi')
         os.makedirs(d, exist_ok=True)
-        for song in bank.songs:
-            n = song['index']
-            name = f'{n + 1:02d} {TITLES[n]}.mid'
-            write_midi(os.path.join(d, name), bank, song, TITLES[n])
+        for n in ORDER:
+            name = f'{track_number(n):02d} {TITLES[n]}.mid'
+            write_midi(os.path.join(d, name), bank, bank.songs[n], TITLES[n])
             log(f'  {name}')
     if samples:
         d = os.path.join(outdir, 'samples')

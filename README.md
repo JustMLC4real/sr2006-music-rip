@@ -51,21 +51,23 @@ To get FLAC or WAV files, convert the PSF2 files with your player, for example f
 
 The game has no track titles; these names describe where each track plays. They were worked out from the game code and the in-game texts.
 
-| # | Name | Where it plays | Intro | Loop |
-|---|---|---|---|---|
-| 01 | Title Screen | Right after the title movie | none | 57.313 s |
-| 02 | Main Menu | After you leave the title screen; the front-end menus | 0.849 s | 39.735 s |
-| 03 | Results | The results screens; also the trophy / prize / CD room in Career | 9.600 s | 19.200 s |
-| 04 | Career Menu (Pro) * | Career main menu while you have a pro contract (replaces 06) | 19.800 s | 38.400 s |
-| 05 | Career Mode Start | The Career opening screen | 26.666 s | 42.666 s |
-| 06 | Career Menu (Amateur) | Career main menu on practice days and free days | 17.767 s | 35.554 s |
-| 07 | Race Entry (Pro) * | Race entry screen while you have a pro contract (replaces 09) | 17.453 s | 17.454 s |
-| 08 | Race Day | Career main menu on a race day ("今日はレース参戦の日です") | none | 59.600 s |
-| 09 | Race Entry (Amateur) | Race entry screen without a pro contract | 2.665 s | 21.331 s |
-| 10 | Jingle - Pro Contract Signed | With the message that you signed a pro contract with Subaru, Mitsubishi, Ford, Citroën or Peugeot | 9.850 s, once | - |
-| 11 | Jingle - Sponsor Contract Signed | With the message that you signed a main or sub sponsor; probably also on the Career results screen for 2nd or 3rd place | 5.066 s, once | - |
+The tracks are numbered from the title screen into Career, with the amateur and pro version of a screen side by side. *Bank* is the song's number in the game's sound bank; it is also in the `comment` tag of each `.minipsf2`.
 
-\* The game plays 04 and 07 instead of 06 and 09 when a flag in the Career data is set. The same flag switches on the "XL" Career logo and replaces "buy parts" with "free run and tyre change" on free days, which fits a factory driver with a pro contract. That the flag means the pro contract is derived; the game never names it.
+| # | Bank | Name | Where it plays | Intro | Loop |
+|---|---|---|---|---|---|
+| 01 | 00 | Title Screen | Right after the title movie | none | 57.313 s |
+| 02 | 01 | Main Menu | After you leave the title screen; the front-end menus | 0.849 s | 39.735 s |
+| 03 | 04 | Career Mode Start | The Career opening screen | 26.666 s | 42.666 s |
+| 04 | 05 | Career Menu (Amateur) | Career main menu on practice days and free days | 17.767 s | 35.554 s |
+| 05 | 03 | Career Menu (Pro) * | Career main menu while you have a pro contract (replaces 04) | 19.800 s | 38.400 s |
+| 06 | 08 | Race Entry (Amateur) | Race entry screen without a pro contract | 2.665 s | 21.331 s |
+| 07 | 06 | Race Entry (Pro) * | Race entry screen while you have a pro contract (replaces 06) | 17.453 s | 17.454 s |
+| 08 | 07 | Race Day | Career main menu on a race day ("今日はレース参戦の日です") | none | 59.600 s |
+| 09 | 02 | Results | The results screens; also the trophy / prize / CD room in Career | 9.600 s | 19.200 s |
+| 10 | 09 | Jingle - Pro Contract Signed | With the message that you signed a pro contract with Subaru, Mitsubishi, Ford, Citroën or Peugeot | 9.850 s, once | - |
+| 11 | 10 | Jingle - Sponsor Contract Signed | With the message that you signed a main or sub sponsor; probably also on the Career results screen for 2nd or 3rd place | 5.066 s, once | - |
+
+\* The game plays 05 and 07 instead of 04 and 06 when a flag in the Career data is set. The same flag switches on the "XL" Career logo and replaces "buy parts" with "free run and tyre change" on free days, which fits a factory driver with a pro contract. That the flag means the pro contract is derived; the game never names it.
 
 Intro and loop are the lengths in the sequence data.
 
@@ -96,7 +98,7 @@ The `sr2006.irx` module is assembled by a small MIPS assembler in this repositor
 
 The driver runs on an IOP hardware timer of exactly 5 ms. Each tick, the sequencer advances 5 ms and plays every event that is due, so notes always start on a 5 ms grid. Its time counter runs on across the end of a sequence, so there is no drift: on average a loop lasts exactly as long as in the data.
 
-When the loop length is not a multiple of 5 ms (tracks 01, 05, 06, 07 and 09), each pass falls on the grid a little differently. Single notes can then be up to 5 ms earlier or later from pass to pass, and the pattern repeats after 5 passes. This is how the game plays them too.
+When the loop length is not a multiple of 5 ms (tracks 01, 03, 04, 06 and 07), each pass falls on the grid a little differently. Single notes can then be up to 5 ms earlier or later from pass to pass, and the pattern repeats after 5 passes. This is how the game plays them too.
 
 The length tag of each looping track ends on the driver tick that starts the third pass, so the fade begins right after two full loops.
 

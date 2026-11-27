@@ -453,11 +453,19 @@ GAME_INDEX = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 8, 8: 7}   # bank son
 GAME_VOLUME = [90, 90, 63, 72, 90, 63, 90, 72, 81, 72]
 MASTER = 127
 
-# Descriptive names (the game has no track titles); see the README for where
-# each one plays.
+# Descriptive names per bank song (the game has no track titles); see the
+# README for where each one plays.
 TITLES = ['Title Screen', 'Main Menu', 'Results', 'Career Menu (Pro)', 'Career Mode Start',
           'Career Menu (Amateur)', 'Race Entry (Pro)', 'Race Day', 'Race Entry (Amateur)',
           'Jingle - Pro Contract Signed', 'Jingle - Sponsor Contract Signed']
+# Track order of the output: from the title screen into Career, with the
+# amateur and pro version of a screen side by side.
+ORDER = [0, 1, 4, 5, 3, 8, 6, 7, 2, 9, 10]      # bank song of track 1, 2, ...
+
+
+def track_number(n):
+    """Track number (1-11) of bank song n."""
+    return ORDER.index(n) + 1
 BANK_PATH = 'se/r2k5sngs.dat'
 LIB_NAME = 'sr2006.psf2lib'
 
@@ -523,14 +531,15 @@ def build_set(game_dir, outdir, log=print):
     with open(paths[0], 'wb') as f:
         f.write(psf2(lib, {}))
     log(f'  {LIB_NAME}')
-    for song in bank.songs:
-        n = song['index']
+    for n in ORDER:
+        song = bank.songs[n]
+        tn = track_number(n)
         length, fade = song_length(bank, song)
         tags = {'_lib': LIB_NAME, 'game': 'Sega Rally 2006', 'year': '2006',
-                'copyright': 'Sega', 'title': TITLES[n],
-                'comment': f'SNDF request 0x{0xa8000000 | (n << 8):08X}, bank r2k5sngs.dat',
+                'copyright': 'Sega', 'title': TITLES[n], 'track': str(tn),
+                'comment': f'Bank song {n:02d}, SNDF request 0x{0xa8000000 | (n << 8):08X}, bank r2k5sngs.dat',
                 'length': fmt_time(length), 'fade': str(fade)}
-        path = os.path.join(outdir, f'{n + 1:02d} {TITLES[n]}.minipsf2')
+        path = os.path.join(outdir, f'{tn:02d} {TITLES[n]}.minipsf2')
         with open(path, 'wb') as f:
             f.write(psf2({'song.cfg': song_cfg(n)}, tags))
         paths.append(path)
