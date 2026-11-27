@@ -69,9 +69,9 @@ The game has no track titles; these names describe where each track plays. They 
 
 Intro and loop are the lengths in the sequence data.
 
-### Credits
+### Composer
 
-The game's staff roll lists the sound team: Sound Director Hiro, Chief Sound Creator Takenobu Mitsuyoshi, Manipulator Masaru Setsumaru, and the composers Naofumi Hataya, Kentaro Koyama, Mitsuharu Fukuyama, Takeshi Isozaki, Hideki Naganuma, Jun Senoue, Junko Shiratsu, Tomoya Ohtani, Tomonori Sawada and Richard Jacques. The game does not say who wrote which track.
+Unknown. The game's staff roll only lists the sound team of the whole game, most of whose music is streamed, and does not say who wrote which track. So it is not known who composed these eleven sequenced tracks.
 
 ## How it works
 
